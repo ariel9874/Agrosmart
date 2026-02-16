@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroSmart MX — Gestión agrícola inteligente</title>
+    <meta name="description" content="Aplicación móvil para agricultores mexicanos. Gestiona parcelas, cultivos, costos y más con inteligencia artificial. Tienda de agroinsumos AgroSmart MX.">
+    <meta name="theme-color" content="#2E7D32">
+    <link rel="icon" type="image/webp" href="img/icon.webp">
+    <!-- Open Graph -->
+    <meta property="og:title" content="AgroSmart MX — Gestión agrícola inteligente">
+    <meta property="og:description" content="App para agricultores mexicanos. Parcelas, cultivos, costos, IA y más.">
+    <meta property="og:image" content="img/icon_round.webp">
+    <meta property="og:type" content="website">
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: #333; line-height: 1.6; background: #fafaf5;
+        }
+        img { max-width: 100%; height: auto; }
+        a { color: #2E7D32; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        /* ===== COLORS ===== */
+        :root {
+            --green-dark: #1B5E20;
+            --green: #2E7D32;
+            --green-light: #4CAF50;
+            --olive: #B2A850;
+            --cream: #fafaf5;
+            --white: #ffffff;
+            --shadow: 0 2px 12px rgba(0,0,0,.1);
+        }
+
+        /* ===== NAV ===== */
+        nav {
+            position: fixed; top: 0; width: 100%; z-index: 100;
+            background: var(--green-dark); color: var(--white);
+            display: flex; align-items: center; justify-content: space-between;
+            padding: .7rem 2rem; box-shadow: var(--shadow);
+        }
+        nav .brand { display: flex; align-items: center; gap: .5rem; font-weight: 700; font-size: 1.15rem; }
+        nav .brand img { width: 36px; height: 36px; border-radius: 8px; }
+        nav ul { list-style: none; display: flex; gap: 1.5rem; }
+        nav ul a { color: #ffffffcc; font-size: .95rem; transition: color .2s; }
+        nav ul a:hover { color: #fff; text-decoration: none; }
+        .hamburger { display: none; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
+
+        /* ===== HERO ===== */
+        .hero {
+            margin-top: 56px;
+            background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 50%, var(--olive) 100%);
+            color: var(--white); text-align: center;
+            padding: 5rem 1.5rem 4rem;
+        }
+        .hero img { width: 120px; height: 120px; border-radius: 24px; box-shadow: 0 4px 20px rgba(0,0,0,.3); margin-bottom: 1.5rem; }
+        .hero h1 { font-size: 2.8rem; margin-bottom: .5rem; }
+        .hero p { font-size: 1.2rem; max-width: 600px; margin: 0 auto 2rem; opacity: .92; }
+        .hero .cta-group { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+        .btn {
+            display: inline-flex; align-items: center; gap: .5rem;
+            padding: .85rem 1.8rem; border-radius: 50px; font-weight: 600;
+            font-size: 1rem; transition: transform .2s, box-shadow .2s;
+            border: none; cursor: pointer; text-decoration: none;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 16px rgba(0,0,0,.25); text-decoration: none; }
+        .btn-white { background: #fff; color: var(--green-dark); }
+        .btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.6); }
+        .btn-green { background: var(--green); color: #fff; }
+        .btn-whatsapp { background: #25D366; color: #fff; }
+
+        /* ===== SECTIONS ===== */
+        section { padding: 4rem 1.5rem; }
+        .section-title { text-align: center; margin-bottom: 2.5rem; }
+        .section-title h2 { font-size: 2rem; color: var(--green-dark); margin-bottom: .5rem; }
+        .section-title p { color: #666; font-size: 1.05rem; max-width: 600px; margin: 0 auto; }
+
+        /* ===== FEATURES ===== */
+        #funciones { background: var(--white); }
+        .features-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem; max-width: 1100px; margin: 0 auto;
+        }
+        .feature-card {
+            background: var(--cream); border-radius: 16px; padding: 1.8rem;
+            box-shadow: 0 1px 6px rgba(0,0,0,.06); transition: transform .2s;
+        }
+        .feature-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+        .feature-card .icon { font-size: 2rem; margin-bottom: .8rem; }
+        .feature-card h3 { font-size: 1.1rem; color: var(--green-dark); margin-bottom: .4rem; }
+        .feature-card p { font-size: .92rem; color: #555; }
+
+        /* ===== TIENDA ===== */
+        #tienda { background: var(--cream); }
+        .store-header { text-align: center; margin-bottom: 2rem; }
+        .store-header .badge {
+            display: inline-block; background: var(--olive); color: #fff;
+            padding: .3rem 1rem; border-radius: 20px; font-size: .85rem; font-weight: 600; margin-bottom: .5rem;
+        }
+        .products-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem; max-width: 1100px; margin: 0 auto;
+        }
+        .product-card {
+            background: var(--white); border-radius: 16px; overflow: hidden;
+            box-shadow: 0 1px 8px rgba(0,0,0,.08); transition: transform .2s;
+            display: flex; flex-direction: column;
+        }
+        .product-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+        .product-img {
+            height: 180px; display: flex; align-items: center; justify-content: center;
+            font-size: 4rem; background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+        }
+        .product-body { padding: 1.2rem; flex: 1; display: flex; flex-direction: column; }
+        .product-body h3 { font-size: 1.05rem; color: var(--green-dark); margin-bottom: .3rem; }
+        .product-body .desc { font-size: .88rem; color: #666; flex: 1; margin-bottom: .8rem; }
+        .product-body .price { font-size: 1.2rem; font-weight: 700; color: var(--green); margin-bottom: .8rem; }
+        .product-body .btn-whatsapp { width: 100%; justify-content: center; font-size: .9rem; padding: .65rem 1rem; border-radius: 12px; }
+
+        /* ===== DESCARGA ===== */
+        #descarga { background: linear-gradient(135deg, var(--green-dark), var(--green)); color: var(--white); text-align: center; }
+        #descarga h2 { color: #fff; }
+        #descarga p { color: #ffffffcc; }
+        .download-badges { display: flex; gap: 1rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
+        .download-badges img { height: 56px; }
+
+        /* ===== CONTACTO ===== */
+        #contacto { background: var(--white); }
+        .contact-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem; max-width: 900px; margin: 0 auto;
+        }
+        .contact-card {
+            text-align: center; padding: 2rem; border-radius: 16px; background: var(--cream);
+        }
+        .contact-card .icon { font-size: 2.5rem; margin-bottom: .8rem; }
+        .contact-card h3 { color: var(--green-dark); margin-bottom: .3rem; }
+        .contact-card p { color: #555; font-size: .95rem; }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--green-dark); color: #ffffffaa; text-align: center;
+            padding: 2rem 1.5rem; font-size: .88rem;
+        }
+        footer a { color: #ffffffcc; }
+        footer .links { display: flex; gap: 1.5rem; justify-content: center; margin-bottom: 1rem; flex-wrap: wrap; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            nav ul { display: none; flex-direction: column; position: absolute; top: 56px; left: 0; width: 100%; background: var(--green-dark); padding: 1rem 2rem; gap: .8rem; }
+            nav ul.open { display: flex; }
+            .hamburger { display: block; }
+            .hero h1 { font-size: 2rem; }
+            .hero p { font-size: 1rem; }
+            section { padding: 3rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="brand">
+        <img src="img/icon_round.webp" alt="AgroSmart MX" width="36" height="36">
+        AgroSmart MX
+    </div>
+    <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menú">☰</button>
+    <ul id="navLinks">
+        <li><a href="#funciones">Funciones</a></li>
+        <li><a href="#tienda">Agroinsumos</a></li>
+        <li><a href="#descarga">Descargar</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+    </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <img src="img/icon_round.webp" alt="AgroSmart MX" width="120" height="120">
+    <h1>AgroSmart MX</h1>
+    <p>La app que todo agricultor mexicano necesita. Gestiona tus parcelas, cultivos, costos y recibe asistencia con inteligencia artificial — todo desde tu celular.</p>
+    <div class="cta-group">
+        <a href="#descarga" class="btn btn-white">📲 Descargar gratis</a>
+        <a href="#tienda" class="btn btn-outline">🛒 Ver agroinsumos</a>
+    </div>
+</section>
+
+<!-- FUNCIONES -->
+<section id="funciones">
+    <div class="section-title">
+        <h2>¿Qué puedes hacer con AgroSmart MX?</h2>
+        <p>Todo lo que necesitas para gestionar tu campo, en una sola app</p>
+    </div>
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="icon">🗺️</div>
+            <h3>Medición de parcelas</h3>
+            <p>Mide tus terrenos con GPS y visualiza en mapa satelital. Calcula superficie en hectáreas automáticamente.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🌱</div>
+            <h3>Gestión de cultivos</h3>
+            <p>Registra parcelas, cultivos y ciclos. Lleva historial de todas tus temporadas.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🤖</div>
+            <h3>Asistente con IA</h3>
+            <p>Pregúntale al asistente de inteligencia artificial cualquier duda agrícola — por texto o por voz.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">💰</div>
+            <h3>Dashboard de costos</h3>
+            <p>Visualiza tus gastos por actividad: riego, fertilización, fumigación, mano de obra y más.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">📊</div>
+            <h3>Comparativa de ciclos</h3>
+            <p>Compara rendimiento, costos y eficiencia entre diferentes ciclos agrícolas.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🛰️</div>
+            <h3>Salud de cultivos (NDVI)</h3>
+            <p>Monitorea la salud de tus cultivos mediante imágenes satelitales con índices NDVI y NDMI.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🐛</div>
+            <h3>Bitácora de plagas</h3>
+            <p>Registra plagas, enfermedades y malezas. Da seguimiento y documenta tratamientos.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">🌦️</div>
+            <h3>Alertas climáticas</h3>
+            <p>Recibe alertas de heladas, lluvias fuertes y sequías basadas en la ubicación de tus parcelas.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">📅</div>
+            <h3>Calendario agrícola</h3>
+            <p>Programa riegos, fertilizaciones, fumigaciones y cosechas. Recibe recordatorios automáticos.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">📤</div>
+            <h3>Exportar datos</h3>
+            <p>Exporta tus registros en Excel, CSV o PDF. Comparte con compradores, asesores o dependencias.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">📶</div>
+            <h3>Modo sin internet</h3>
+            <p>Trabaja sin señal en el campo. Todo se sincroniza automáticamente cuando regresas a la red.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">👥</div>
+            <h3>Equipo de trabajo</h3>
+            <p>Agrega colaboradores, asigna actividades y lleva control de tu equipo agrícola.</p>
+        </div>
+    </div>
+</section>
+
+<!-- TIENDA -->
+<section id="tienda">
+    <div class="section-title">
+        <div class="store-header">
+            <span class="badge">🏪 AgroSmart MX — Agroinsumos</span>
+        </div>
+        <h2>Tienda de agroinsumos</h2>
+        <p>Próximamente podrás pedir tus insumos agrícolas directamente desde aquí — sin comisiones, sin intermediarios.</p>
+    </div>
+    <div class="products-grid">
+
+        <div class="product-card" style="border: 2px dashed var(--olive); grid-column: 1 / -1; max-width: 600px; margin: 0 auto;">
+            <div class="product-img" style="background: linear-gradient(135deg, #fff8e1, #f1f8e9); font-size: 3rem;">🚧</div>
+            <div class="product-body" style="text-align: center;">
+                <h3>Tienda en construcción</h3>
+                <p class="desc">Estamos preparando nuestro catálogo completo de agroinsumos: fertilizantes, herbicidas, insecticidas, fungicidas, semillas, herramientas y más. Muy pronto podrás hacer tus pedidos desde aquí.</p>
+                <div class="price" style="color: var(--olive);">Próximamente</div>
+                <a href="mailto:soporte@agrosmartmx.com" class="btn btn-green" style="width: 100%; justify-content: center; font-size: .9rem; padding: .65rem 1rem; border-radius: 12px;">📧 Contáctanos para más información</a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- DESCARGA -->
+<section id="descarga">
+    <div class="section-title">
+        <h2>Descarga AgroSmart MX gratis</h2>
+        <p>Disponible para Android. Empieza a gestionar tu campo de forma inteligente hoy.</p>
+    </div>
+    <div class="download-badges">
+        <!-- Reemplazar con tu link real de Play Store cuando esté publicada -->
+        <a href="#" class="btn btn-white" style="font-size: 1.1rem;">
+            ▶️ Próximamente en Google Play
+        </a>
+    </div>
+    <p style="margin-top: 1.5rem; font-size: .9rem; opacity: .8;">Requiere Android 8.1 o superior · 100% gratuita · Sin anuncios</p>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto">
+    <div class="section-title">
+        <h2>Contacto</h2>
+        <p>Estamos para ayudarte</p>
+    </div>
+    <div class="contact-grid">
+        <div class="contact-card">
+            <div class="icon">📧</div>
+            <h3>Correo electrónico</h3>
+            <p><a href="mailto:soporte@agrosmartmx.com">soporte@agrosmartmx.com</a></p>
+            <p style="font-size:.85rem; color: #888; margin-top: .3rem;">Soporte técnico y dudas</p>
+        </div>
+        <div class="contact-card">
+            <div class="icon">🌐</div>
+            <h3>Síguenos</h3>
+            <p><strong>AgroSmart MX</strong></p>
+            <p style="font-size:.85rem; color: #888; margin-top: .3rem;">Próximamente en redes sociales</p>
+        </div>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="links">
+        <a href="privacidad.html">Política de Privacidad</a>
+        <a href="terminos.html">Términos y Condiciones</a>
+        <a href="#contacto">Contacto</a>
+    </div>
+    <p>&copy; 2026 AgroSmart MX · México</p>
+</footer>
+
+<script>
+    // Close mobile menu on link click
+    document.querySelectorAll('#navLinks a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('navLinks').classList.remove('open');
+        });
+    });
+</script>
+
+</body>
+</html>
